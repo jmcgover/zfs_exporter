@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/pdf/zfs_exporter/v2/zfs/mock_zfs"
+	"github.com/jmcgover/zfs_exporter/v2/zfs/mock_zfs"
 	"go.uber.org/mock/gomock"
 )
 
@@ -161,7 +161,7 @@ zfs_pool_health{pool="suspendedpool"} 6
 					`unsupported`: `1024`,
 				},
 			},
-			metricResults: `# HELP zfs_pool_unsupported !!! This property is unsupported, results are likely to be undesirable, please file an issue at https://github.com/pdf/zfs_exporter/issues to have this property supported !!!
+			metricResults: `# HELP zfs_pool_unsupported !!! This property is unsupported, results are likely to be undesirable, please file an issue at https://github.com/jmcgover/zfs_exporter/issues to have this property supported !!!
 # TYPE zfs_pool_unsupported gauge
 zfs_pool_unsupported{pool="testpool"} 1024
 `,
