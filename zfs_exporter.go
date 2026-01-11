@@ -40,6 +40,13 @@ func main() {
 	logger.Info("Starting zfs_exporter", "version", version.Info())
 	logger.Info("Build context", "context", version.BuildContext())
 
+	zfs_version, err := zfs.GetZFSVersion()
+	if err != nil {
+		logger.Error("Error getting ZFS version", "err", err)
+		os.Exit(7)
+	}
+	logger.Info("ZFS Version", "version", zfs_version)
+
 	c, err := collector.NewZFS(collector.ZFSConfig{
 		DisableMetrics: *metricsExporterDisabled,
 		Deadline:       *deadline,

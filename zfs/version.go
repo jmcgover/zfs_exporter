@@ -24,7 +24,7 @@ type ZFSVersionOutput struct {
 	zfs_version    ZFSVersion
 }
 
-func getZFSVersion() (*ZFSVersion, error) {
+func GetZFSVersion() (*string, error) {
 	cmd := exec.Command(`zpool`, `--json`, `--json-int`, `list`, `-Ho`, `name`)
 
 	// Setup pipes
@@ -59,5 +59,5 @@ func getZFSVersion() (*ZFSVersion, error) {
 	if err := json.Unmarshal(stdo, &o); err != nil {
 		return nil, fmt.Errorf("failed to read output of '%s'; output: (%w)", cmd.String(), err)
 	}
-	return &o.zfs_version, nil
+	return &o.zfs_version.userland, nil
 }
