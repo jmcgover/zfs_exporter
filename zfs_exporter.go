@@ -40,7 +40,7 @@ func main() {
 	logger.Info("Starting zfs_exporter", "version", version.Info())
 	logger.Info("Build context", "context", version.BuildContext())
 
-	zfs_version, err := zfs.GetZFSVersion()
+	zfs_version, err := zfs.GetZFSVersion(logger)
 	if err != nil {
 		logger.Error("Error getting ZFS version", "err", err)
 		os.Exit(7)

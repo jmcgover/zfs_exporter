@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log/slog"
 	"os/exec"
 	"strings"
 )
@@ -24,7 +25,7 @@ type ZFSVersionOutput struct {
 	zfs_version    ZFSVersion
 }
 
-func GetZFSVersion() (*string, error) {
+func GetZFSVersion(logger *slog.Logger) (*string, error) {
 	cmd := exec.Command(`zpool`, `--json`, `--json-int`, `list`, `-Ho`, `name`)
 
 	// Setup pipes
@@ -59,5 +60,7 @@ func GetZFSVersion() (*string, error) {
 	if err := json.Unmarshal(stdo, &o); err != nil {
 		return nil, fmt.Errorf("failed to read output of '%s'; output: (%w)", cmd.String(), err)
 	}
+	logger.Debug("ZFS Command Output Version", "output_version", o.output_version)
+	logger.Debug("ZFS Version", "zfs_version", o.zfs_version)
 	return &o.zfs_version.userland, nil
 }
