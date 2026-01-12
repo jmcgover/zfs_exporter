@@ -94,6 +94,7 @@ type PoolStatusT struct {
 	Status     string                 `json:"status"`
 	Action     string                 `json:"action"`
 	Moreinfo   string                 `json:"moreinfo"`
+	ErrorCount int                    `json:"error_count"`
 	ScanStats  ScanStatsT             `json:"scan_stats"`
 	Vdevs      map[string]VdevStatusT `json:"vdevs"`
 }
@@ -109,6 +110,7 @@ func (o PoolStatusT) LogValue() slog.Value {
 		slog.String("status", o.Status),
 		slog.String("action", o.Action),
 		slog.String("more_info", o.Moreinfo),
+		slog.Int("error_count", o.ErrorCount),
 		slog.Int("num_vdevs", len(o.Vdevs)),
 	)
 }
