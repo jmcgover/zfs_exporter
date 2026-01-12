@@ -10,22 +10,21 @@ import (
 )
 
 type VdevStatusT struct {
-	Name           string                 `json:"name"`
-	VdevType       string                 `json:"vdev_type"`
-	Guid           uint64                 `json:"guid"`
-	Path           string                 `json:"path"`
-	PhysPath       string                 `json:"phys_path"`
-	Devid          string                 `json:"devid"`
-	Class          string                 `json:"class"`
-	State          string                 `json:"state"`
-	Parent         string                 `json:"parent"`
-	RepDevSize     int                    `json:"rep_dev_size"`
-	PhysSpace      int                    `json:"phys_space"`
-	ReadErrors     int                    `json:"read_errors"`
-	WriteErrors    int                    `json:"write_errors"`
-	ChecksumErrors int                    `json:"checksum_errors"`
-	SlowIos        int                    `json:"slow_ios"`
-	Vdevs          map[string]VdevStatusT `json:"vdevs,omitempty"`
+	Name           string `json:"name"`
+	VdevType       string `json:"vdev_type"`
+	Guid           uint64 `json:"guid"`
+	Path           string `json:"path"`
+	PhysPath       string `json:"phys_path"`
+	Devid          string `json:"devid"`
+	Class          string `json:"class"`
+	State          string `json:"state"`
+	Parent         string `json:"parent"`
+	RepDevSize     int    `json:"rep_dev_size"`
+	PhysSpace      int    `json:"phys_space"`
+	ReadErrors     int    `json:"read_errors"`
+	WriteErrors    int    `json:"write_errors"`
+	ChecksumErrors int    `json:"checksum_errors"`
+	SlowIos        int    `json:"slow_ios"`
 }
 
 func (o VdevStatusT) LogValue() slog.Value {
@@ -45,7 +44,6 @@ func (o VdevStatusT) LogValue() slog.Value {
 		slog.Int("write_errors", o.WriteErrors),
 		slog.Int("checksum_errors", o.ChecksumErrors),
 		slog.Int("slow_ios", o.SlowIos),
-		slog.Int("num_vdevs", len(o.Vdevs)),
 	)
 }
 

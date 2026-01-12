@@ -62,7 +62,6 @@ func main() {
 		logger.Debug("Pool ScanStats", "scan_stats", pool_status.ScanStats)
 		for vdev_name, vdev_status := range pool_status.Vdevs {
 			logger.Debug("Vdev Name", "name", vdev_name)
-			logger.Debug("Vdev Vdevs", "num_vdevs", len(vdev_status.Vdevs))
 			logger.Debug("Vdev Status", "status", vdev_status)
 		}
 	}
