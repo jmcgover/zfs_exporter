@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-type OutputVersionT struct {
+type ZFSCommandOutputVersionT struct {
 	Command string `json:"command"`
 	Major   int    `json:"major"`
 	Minor   int    `json:"minor"`
@@ -21,8 +21,8 @@ type ZFSVersionT struct {
 }
 
 type ZFSVersionOutputT struct {
-	OutputVersion OutputVersionT `json:"output_version"`
-	ZFSVersion    ZFSVersionT    `json:"zfs_version"`
+	OutputVersion ZFSCommandOutputVersionT `json:"output_version"`
+	ZFSVersion    ZFSVersionT              `json:"zfs_version"`
 }
 
 func (o ZFSVersionOutputT) LogValue() slog.Value {
@@ -35,7 +35,7 @@ func (o ZFSVersionOutputT) LogValue() slog.Value {
 	)
 }
 
-func GetZFSVersion(logger *slog.Logger) (*string, error) {
+func GetZFSVersionViaJSON(logger *slog.Logger) (*string, error) {
 	cmd := exec.Command(`zfs`, `version`, `--json`)
 
 	// Setup pipes
