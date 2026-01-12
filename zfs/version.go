@@ -36,7 +36,7 @@ func (o ZFSVersionOutputT) LogValue() slog.Value {
 }
 
 func GetZFSVersion(logger *slog.Logger) (*string, error) {
-	cmd := exec.Command(`zfs`, `version`, `--json`, `--json-int`)
+	cmd := exec.Command(`zfs`, `version`, `--json`)
 
 	// Setup pipes
 	stdout, err := cmd.StdoutPipe()
