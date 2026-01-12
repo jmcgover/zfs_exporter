@@ -9,20 +9,30 @@ import (
 	"strings"
 )
 
-type OutputVersion struct {
-	command string
-	major   int64
-	minor   int64
+type OutputVersionT struct {
+	Command string
+	Major   int
+	Minor   int
 }
 
-type ZFSVersion struct {
-	userland string
-	kernel   string
+type ZFSVersionT struct {
+	Userland string
+	Kernel   string
 }
 
-type ZFSVersionOutput struct {
-	output_version OutputVersion
-	zfs_version    ZFSVersion
+type ZFSVersionOutputT struct {
+	OutputVersion OutputVersionT
+	ZFSVersion    ZFSVersionT
+}
+
+func (o ZFSVersionOutputT) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("output_version.command", o.OutputVersion.Command),
+		slog.Int("output_version.major", o.OutputVersion.Major),
+		slog.Int("output_version.minor", o.OutputVersion.Minor),
+		slog.String("zfs_version.userland", o.ZFSVersion.Userland),
+		slog.String("zfs_version.kernel", o.ZFSVersion.Kernel),
+	)
 }
 
 func GetZFSVersion(logger *slog.Logger) (*string, error) {
@@ -56,11 +66,10 @@ func GetZFSVersion(logger *slog.Logger) (*string, error) {
 	}
 
 	// unmarshal JSON into Go objects
-	var o ZFSVersionOutput
+	var o ZFSVersionOutputT
 	if err := json.Unmarshal(stdo, &o); err != nil {
 		return nil, fmt.Errorf("failed to read output of '%s'; output: (%w)", cmd.String(), err)
 	}
-	logger.Debug("ZFS Command Output Version", "output_version", o.output_version)
-	logger.Debug("ZFS Version", "zfs_version", o.zfs_version)
-	return &o.zfs_version.userland, nil
+	logger.Debug("ZFS Command Output", "output", o)
+	return &o.ZFSVersion.Userland, nil
 }
