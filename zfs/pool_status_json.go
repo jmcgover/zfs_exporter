@@ -20,10 +20,12 @@ type VdevStatusT struct {
 	State          string `json:"state"`
 	Parent         string `json:"parent"`
 	RepDevSize     int    `json:"rep_dev_size"`
+	SelfHealed     int    `json:"self_healed,omitempty"`
 	PhysSpace      int    `json:"phys_space"`
 	ReadErrors     int    `json:"read_errors"`
 	WriteErrors    int    `json:"write_errors"`
 	ChecksumErrors int    `json:"checksum_errors"`
+	ScanProcessed  int    `json:"scan_processed,omitempty"`
 	SlowIos        int    `json:"slow_ios"`
 }
 
@@ -39,10 +41,12 @@ func (o VdevStatusT) LogValue() slog.Value {
 		slog.String("state", o.State),
 		slog.String("parent", o.Parent),
 		slog.Int("rep_dev_size", o.RepDevSize),
+		slog.Int("self_healed", o.SelfHealed),
 		slog.Int("phys_space", o.PhysSpace),
 		slog.Int("read_errors", o.ReadErrors),
 		slog.Int("write_errors", o.WriteErrors),
 		slog.Int("checksum_errors", o.ChecksumErrors),
+		slog.Int("scan_processed", o.ScanProcessed),
 		slog.Int("slow_ios", o.SlowIos),
 	)
 }
