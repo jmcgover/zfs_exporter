@@ -25,7 +25,7 @@ type VdevStatusT struct {
 	WriteErrors    int                    `json:"write_errors"`
 	ChecksumErrors int                    `json:"checksum_errors"`
 	SlowIos        int                    `json:"slow_ios"`
-	Vdevs          map[string]VdevStatusT `json:"vdevs"`
+	Vdevs          map[string]VdevStatusT `json:"vdevs,omitempty"`
 }
 
 func (o VdevStatusT) LogValue() slog.Value {
