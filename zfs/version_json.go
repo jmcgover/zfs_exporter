@@ -15,6 +15,14 @@ type ZFSCommandOutputVersionT struct {
 	Minor   int    `json:"minor"`
 }
 
+func (o ZFSCommandOutputVersionT) LogValue() slog.Value {
+	return slog.GroupValue(
+		slog.String("command", o.Command),
+		slog.Int("major", o.Major),
+		slog.Int("minor", o.Minor),
+	)
+}
+
 type ZFSVersionT struct {
 	Userland string `json:"userland"`
 	Kernel   string `json:"kernel"`

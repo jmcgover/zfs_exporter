@@ -40,12 +40,27 @@ func main() {
 	logger.Info("Starting zfs_exporter", "version", version.Info())
 	logger.Info("Build context", "context", version.BuildContext())
 
+	// ZFS Version
 	zfs_version, err := zfs.GetZFSVersionViaJSON(logger)
 	if err != nil {
 		logger.Error("Error getting ZFS version", "err", err)
 		os.Exit(7)
 	}
 	logger.Info("ZFS Version", "version", *zfs_version)
+
+	// Pool Status
+	pool_name_status_map, err := zfs.ZpoolStatusViaJSON(logger)
+	if err != nil {
+		logger.Error("Error getting pool status", "err", err)
+		os.Exit(8)
+	}
+	logger.Debug("Num Pools", "num_pools", len(*pool_name_status_map))
+	for pool_name, pool_status := range *pool_name_status_map {
+		logger.Debug("Pool Status", "name", pool_name, "status", pool_status, "scan_stats", pool_status.ScanStats, "num_vdevs", len(pool_status.Vdevs))
+		for vdev_name, vdev_status := range pool_status.Vdevs {
+			logger.Debug("Vdev Status", "name", vdev_name, "status", vdev_status, "num_vdevs", len(vdev_status.Vdevs))
+		}
+	}
 
 	c, err := collector.NewZFS(collector.ZFSConfig{
 		DisableMetrics: *metricsExporterDisabled,
