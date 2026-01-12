@@ -56,9 +56,14 @@ func main() {
 	}
 	logger.Debug("Num Pools", "num_pools", len(*pool_name_status_map))
 	for pool_name, pool_status := range *pool_name_status_map {
-		logger.Debug("Pool Status", "name", pool_name, "status", pool_status, "scan_stats", pool_status.ScanStats, "num_vdevs", len(pool_status.Vdevs))
+		logger.Debug("Pool Name", "name", pool_name)
+		logger.Debug("Pool Vdevs", "num_vdevs", len(pool_status.Vdevs))
+		logger.Debug("Pool Status", "status", pool_status)
+		logger.Debug("Pool ScanStats", "scan_stats", pool_status.ScanStats)
 		for vdev_name, vdev_status := range pool_status.Vdevs {
-			logger.Debug("Vdev Status", "name", vdev_name, "status", vdev_status, "num_vdevs", len(vdev_status.Vdevs))
+			logger.Debug("Vdev Name", "name", vdev_name)
+			logger.Debug("Vdev Vdevs", "num_vdevs", len(vdev_status.Vdevs))
+			logger.Debug("Vdev Status", "status", vdev_status)
 		}
 	}
 
