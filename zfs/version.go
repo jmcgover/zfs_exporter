@@ -10,19 +10,19 @@ import (
 )
 
 type OutputVersionT struct {
-	Command string
-	Major   int
-	Minor   int
+	Command string `json:"command"`
+	Major   int    `json:"major"`
+	Minor   int    `json:"minor"`
 }
 
 type ZFSVersionT struct {
-	Userland string
-	Kernel   string
+	Userland string `json:"userland"`
+	Kernel   string `json:"kernel"`
 }
 
 type ZFSVersionOutputT struct {
-	OutputVersion OutputVersionT
-	ZFSVersion    ZFSVersionT
+	OutputVersion OutputVersionT `json:"output_version"`
+	ZFSVersion    ZFSVersionT    `json:"zfs_version"`
 }
 
 func (o ZFSVersionOutputT) LogValue() slog.Value {
@@ -58,6 +58,7 @@ func GetZFSVersion(logger *slog.Logger) (*string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to read output of '%s'; output: (%w)", cmd.String(), err)
 	}
+	logger.Debug("ZFS Command Output", "stdout", stdo)
 
 	// stderr
 	stde, _ := io.ReadAll(stderr)
@@ -70,6 +71,6 @@ func GetZFSVersion(logger *slog.Logger) (*string, error) {
 	if err := json.Unmarshal(stdo, &o); err != nil {
 		return nil, fmt.Errorf("failed to read output of '%s'; output: (%w)", cmd.String(), err)
 	}
-	logger.Debug("ZFS Command Output", "output", o)
+	logger.Debug("ZFS Command Output Parsed", "output", o)
 	return &o.ZFSVersion.Userland, nil
 }
