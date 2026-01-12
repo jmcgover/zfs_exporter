@@ -12,7 +12,7 @@ import (
 type VdevStatusT struct {
 	Name           string                 `json:"name"`
 	VdevType       string                 `json:"vdev_type"`
-	Guid           int                    `json:"guid"`
+	Guid           int64                  `json:"guid"`
 	Path           string                 `json:"path"`
 	PhysPath       string                 `json:"phys_path"`
 	Devid          string                 `json:"devid"`
@@ -32,7 +32,7 @@ func (o VdevStatusT) LogValue() slog.Value {
 	return slog.GroupValue(
 		slog.String("name", o.Name),
 		slog.String("vdev_type", o.VdevType),
-		slog.Int("guid", o.Guid),
+		slog.Int64("guid", o.Guid),
 		slog.String("path", o.Path),
 		slog.String("phys_path", o.PhysPath),
 		slog.String("devid", o.Devid),
@@ -89,7 +89,7 @@ func (o ScanStatsT) LogValue() slog.Value {
 type PoolStatusT struct {
 	Name       string                 `json:"name"`
 	State      string                 `json:"state"`
-	PoolGuid   int                    `json:"pool_guid"`
+	PoolGuid   int64                  `json:"pool_guid"`
 	Txg        int                    `json:"txg"`
 	SpaVersion int                    `json:"spa_version"`
 	ZplVersion int                    `json:"zpl_version"`
@@ -104,7 +104,7 @@ func (o PoolStatusT) LogValue() slog.Value {
 	return slog.GroupValue(
 		slog.String("name", o.Name),
 		slog.String("state", o.State),
-		slog.Int("pool_guid", o.PoolGuid),
+		slog.Int64("pool_guid", o.PoolGuid),
 		slog.Int("txg", o.Txg),
 		slog.Int("spa_version", o.SpaVersion),
 		slog.Int("zpl_version", o.ZplVersion),
