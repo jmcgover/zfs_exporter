@@ -45,7 +45,7 @@ func main() {
 		logger.Error("Error getting ZFS version", "err", err)
 		os.Exit(7)
 	}
-	logger.Info("ZFS Version", "version", zfs_version)
+	logger.Info("ZFS Version", "version", *zfs_version)
 
 	c, err := collector.NewZFS(collector.ZFSConfig{
 		DisableMetrics: *metricsExporterDisabled,
